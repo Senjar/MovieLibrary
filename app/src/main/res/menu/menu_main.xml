@@ -2,11 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item
-        android:id="@+id/action_favorite"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="@string/action_add"
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_add_white_48dp"
+        android:title="@string/add"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_favorites"
+        android:icon="@drawable/ic_thumbs_up_down_white_48dp"
+        android:title="@string/favorite"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

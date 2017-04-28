@@ -6,10 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,27 +14,38 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    //GridView lvMovies;
+    ArrayList<Movie> movies;
+    //MovieAdapter movieAdapter;
+    CustomAdapter customAdapter;
+    Sqlfunc db;
+    Random rnd; //TODO Remove
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-
-        final List<ItemObject> allItems = getAllItemObject();
-        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, allItems);
+        final GridView gridview = (GridView) findViewById(R.id.gridview);
+        rnd = new Random();
+        //final List<ItemObject> allItems =
+        db = new Sqlfunc(this);
+        movies = db.fetch();
+        customAdapter = new CustomAdapter(MainActivity.this, movies);
         gridview.setAdapter(customAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                previewLayout();
+                previewLayout();//TODO fragment
                 //Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
@@ -46,18 +54,27 @@ public class MainActivity extends ActionBarActivity {
 
         gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("<Movie Name>") //TODO movie actual name
+                final String title = movies.get(position).getTitle();
+                final int date = movies.get(position).getReleaseDate();
+                final float rating = movies.get(position).getRating();
+
+                builder.setTitle(title)
                         .setItems(new String[] {"Edit","Delete"}, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) showEditDialog(); //TODO pass arguments
-                        //TODO else delete
+
+                        if (which == 0) showEditDialog(title,date,rating*2); //TODO pass arguments
+                        else {
+                            Movie movie = (Movie) gridview.getItemAtPosition(position);
+                            db.delete(movie);
+                            customAdapter.remove(movie);
+                        }
                     }
                 });
                 builder.create().show();
-
+                ;
 
 
 
@@ -71,69 +88,75 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        //TODO search
         return  true;
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                addRandom();
+                //showEditDialog();
+                return true;
+
+            case R.id.action_favorites:
+                Toast.makeText(MainActivity.this, "Pressed Favorite", Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    private List<ItemObject> getAllItemObject(){
-        ItemObject itemObject = null;
-        List<ItemObject> items = new ArrayList<>();
-        items.add(new ItemObject("Very very Long Movie Title 1", "five"));
-        items.add(new ItemObject("Movie Title 2", "five"));
-        items.add(new ItemObject("Movie Title 3", "five"));
-        items.add(new ItemObject("Very very very very Long Movie Movie Title 451", "five"));
-        items.add(new ItemObject("Movie Title 5", "five"));
-        items.add(new ItemObject("Movie Title 6", "five"));
-        items.add(new ItemObject("Movie Title 7", "five"));
-        items.add(new ItemObject("Movie Title 8", "five"));
-        items.add(new ItemObject("Movie Title 9", "five"));
-        items.add(new ItemObject("Movie Title 10", "five"));
-        items.add(new ItemObject("Movie Title 11", "five"));
-        items.add(new ItemObject("Movie Title 12", "five"));
-        items.add(new ItemObject("Movie Title 13", "five"));
-        items.add(new ItemObject("Movie Title 14", "five"));
-        items.add(new ItemObject("Movie Title 15", "five"));
-        items.add(new ItemObject("Movie Title 16", "five"));
-        items.add(new ItemObject("Movie Title 17", "five"));
-        items.add(new ItemObject("Movie Title 18", "five"));
-        items.add(new ItemObject("Movie Title 19", "five"));
-        items.add(new ItemObject("Movie Title 20", "five"));
-        items.add(new ItemObject("Movie Title 21", "five"));
-        items.add(new ItemObject("Movie Title 22", "five"));
-        items.add(new ItemObject("Movie Title 23", "five"));
-        items.add(new ItemObject("Movie Title 24", "five"));
-        return items;
+
+    public void addRandom(){
+
+            Movie movie = new Movie();
+
+            NumberFormat formatter = new DecimalFormat("#0.0");
+
+            movie.setTitle("Movie " + rnd.nextInt(100));
+            movie.setRating(Float.parseFloat(formatter.format((rnd.nextFloat() * 10)/2)));
+            movie.setReleaseDate(rnd.nextInt(67)+1950);
+            long movieID = db.insert(movie);
+            movie.setId(movieID);
+            customAdapter.add(movie);
     }
 
-    private void previewLayout() {
+    public void add(String title,int date,float rating){
+        Movie movie = new Movie();
+        movie.setTitle(title);
+        movie.setReleaseDate(date);
+        movie.setRating(rating);
+        long movieID = db.insert(movie);
+        movie.setId(movieID);
+        customAdapter.add(movie);
+    }
+
+    private void previewLayout() { //TODO Replace with Fragment
         Intent intent = new Intent(this,ObjectPreview.class);
         startActivity(intent);
     }
 
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance("Movie Info");
+        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance("New Movie");
         editAddDialogFragment.show(fm, "fragment_edit_name");
     }
 
+    private void showEditDialog(String title,int date,float score) {
+        FragmentManager fm = getSupportFragmentManager();
+        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance(title,date,score);
+        editAddDialogFragment.show(fm, "fragment_edit_name");
+    }
 
 
 

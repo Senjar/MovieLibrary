@@ -3,7 +3,6 @@ package inducesmile.com.androidgridview;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +11,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class EditAddDialogFragment extends DialogFragment {
 
-    private EditText mEditText;
-    RatingBar ratingBar;
-    TextView ratingText;
+    private EditText EditTextTitle;
+    private RatingBar ratingBar;
+    private TextView ratingText;
+    private EditText EditTextDate;
 
     public EditAddDialogFragment() {
         // Empty constructor is required for DialogFragment
         // Make sure not to add arguments to the constructor
         // Use `newInstance` instead as shown below
+    }
+
+    public static EditAddDialogFragment newInstance(String title,int date,float score) {
+        EditAddDialogFragment frag = new EditAddDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putInt("date",date);
+        args.putFloat("score",score);
+        frag.setArguments(args);
+        return frag;
     }
 
     public static EditAddDialogFragment newInstance(String title) {
@@ -43,6 +52,9 @@ public class EditAddDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        String title = getArguments().getString("title", "Enter Title");
+        int date = getArguments().getInt("date",-1);
+        float score = getArguments().getFloat("score",-1f);
 
 
         //Cancel button
@@ -55,8 +67,18 @@ public class EditAddDialogFragment extends DialogFragment {
         });
 
         //Rating Bar rating number update
-        ratingText=(TextView) view.findViewById(R.id.ratingText);
+        EditTextTitle = (EditText) view.findViewById(R.id.editTextTitle);
+        EditTextDate = (EditText) view.findViewById(R.id.editTextDate);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+        ratingText=(TextView) view.findViewById(R.id.ratingText);
+
+        if (date != -1) {
+            EditTextTitle.setText(title);
+            EditTextDate.setText(""+date);
+            ratingBar.setRating(score/2);
+            ratingText.setText(score+"/10");
+        }
+
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
             @Override
@@ -66,14 +88,11 @@ public class EditAddDialogFragment extends DialogFragment {
             }
         });
 
-
-        // Get field from view
-        mEditText = (EditText) view.findViewById(R.id.txt_your_name);
         // Fetch arguments from bundle and set title
-        String title = getArguments().getString("title", "Enter Name");
+
         getDialog().setTitle(title);
         // Show soft keyboard automatically and request focus to field
-        mEditText.requestFocus();
+        EditTextTitle.requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }

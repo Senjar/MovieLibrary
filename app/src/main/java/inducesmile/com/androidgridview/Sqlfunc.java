@@ -1,0 +1,119 @@
+package inducesmile.com.androidgridview;
+
+/**
+ * Created by jklaz on 12-Apr-17.
+ */
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+
+
+public class Sqlfunc extends SQLiteOpenHelper {
+    public static final String DATABASE_NAME = "movies.db";
+    public static final String TABLE_NAME = "movies";
+    public static final String ID = "ID";
+    public static final String TITLE = "TITLE";
+    public static final String RELEASEDATE = "RELEASEDATE";
+    public static final String RATING = "RATING";
+
+    public Sqlfunc(Context context) {
+        super(context, DATABASE_NAME, null, 2);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s TEXT, %s REAL)", TABLE_NAME, ID, TITLE, RELEASEDATE, RATING);
+        db.execSQL(sql);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+    }
+
+    public long insert(Movie movie){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(TITLE, movie.getTitle());
+        cv.put(RELEASEDATE, movie.getReleaseDate());
+        cv.put(RATING, movie.getRating());
+
+        long result = db.insert(TABLE_NAME, null, cv);
+
+        db.close();
+
+        return result;
+    }
+
+    public long update(Movie movie) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TITLE, movie.getTitle());
+        values.put(RELEASEDATE, movie.getReleaseDate());
+        values.put(RATING, movie.getRating());
+
+        long result = db.update(TABLE_NAME, values, ID + " = ?", new String[] { String.valueOf(movie.getId()) });
+
+        db.close();
+        return result;
+    }
+
+    public ArrayList<Movie> fetch(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+
+        Cursor cursor = db.query(TABLE_NAME,
+                new String[] {ID, TITLE, RELEASEDATE, RATING}, null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            Movie movie = new Movie();
+            movie.setId(cursor.getInt(0));
+            movie.setTitle(cursor.getString(1));
+            movie.setReleaseDate(cursor.getInt(2));
+            movie.setRating(cursor.getFloat(3));
+            movies.add(movie);
+        }
+        return movies;
+    }
+
+    public Movie fetchOne(long id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Movie movie = null;
+
+        Cursor cursor = db.query(TABLE_NAME, new String[] {ID, TITLE, RELEASEDATE, RATING}, ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            movie = new Movie();
+            movie.setId(cursor.getInt(0));
+            movie.setTitle(cursor.getString(1));
+            movie.setReleaseDate(cursor.getInt(2));
+            movie.setRating(cursor.getFloat(3));
+        }
+
+        return movie;
+    }
+
+    public void delete(Movie movie) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, ID + " = ?", new String[] { String.valueOf(movie.getId()) });
+        db.close();
+    }
+
+    public int getCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        return cursor.getCount();
+    }
+}
