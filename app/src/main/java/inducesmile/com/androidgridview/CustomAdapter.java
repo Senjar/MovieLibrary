@@ -83,7 +83,7 @@ public class CustomAdapter extends ArrayAdapter<Movie> {
     @Override
     public void add(Movie movie) {
         super.add(movie);
-        //movies.add(movie);
+        //movies.movieAdd(movie);
         notifyDataSetChanged();
     }
 

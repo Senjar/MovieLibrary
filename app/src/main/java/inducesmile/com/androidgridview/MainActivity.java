@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
                         .setItems(new String[] {"Edit","Delete"}, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if (which == 0) showEditDialog(title,date,rating*2); //TODO pass arguments
+                        if (which == 0) showEditDialog(title,date,rating*2,position); //TODO pass arguments
                         else {
                             Movie movie = (Movie) gridview.getItemAtPosition(position);
                             db.delete(movie);
@@ -101,8 +101,8 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                addRandom();
-                //showEditDialog();
+                //addRandom();
+                showEditDialog();
                 return true;
 
             case R.id.action_favorites:
@@ -131,7 +131,7 @@ public class MainActivity extends ActionBarActivity {
             customAdapter.add(movie);
     }
 
-    public void add(String title,int date,float rating){
+    public void movieAdd(String title, int date, float rating){
         Movie movie = new Movie();
         movie.setTitle(title);
         movie.setReleaseDate(date);
@@ -139,6 +139,17 @@ public class MainActivity extends ActionBarActivity {
         long movieID = db.insert(movie);
         movie.setId(movieID);
         customAdapter.add(movie);
+    }
+
+    public void movieUpdate(String title, int date, float rating,int pos) {
+        //int pos = customAdapter.getPosition();
+        //Toast.makeText(MainActivity.this, "Position: " + pos, Toast.LENGTH_SHORT).show();
+        Movie movie = customAdapter.getItem(pos);
+        movie.setTitle(title);
+        movie.setReleaseDate(date);
+        movie.setRating(rating);
+        db.update(movie);
+        customAdapter.update(movie);
     }
 
     private void previewLayout() { //TODO Replace with Fragment
@@ -152,9 +163,9 @@ public class MainActivity extends ActionBarActivity {
         editAddDialogFragment.show(fm, "fragment_edit_name");
     }
 
-    private void showEditDialog(String title,int date,float score) {
+    private void showEditDialog(String title,int date,float score,int pos) {
         FragmentManager fm = getSupportFragmentManager();
-        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance(title,date,score);
+        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance(title,date,score,pos);
         editAddDialogFragment.show(fm, "fragment_edit_name");
     }
 

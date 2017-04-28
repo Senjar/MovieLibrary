@@ -21,16 +21,17 @@ public class EditAddDialogFragment extends DialogFragment {
 
     public EditAddDialogFragment() {
         // Empty constructor is required for DialogFragment
-        // Make sure not to add arguments to the constructor
+        // Make sure not to movieAdd arguments to the constructor
         // Use `newInstance` instead as shown below
     }
 
-    public static EditAddDialogFragment newInstance(String title,int date,float score) {
+    public static EditAddDialogFragment newInstance(String title,int date,float score,int pos) {
         EditAddDialogFragment frag = new EditAddDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         args.putInt("date",date);
         args.putFloat("score",score);
+        args.putInt("pos",pos);
         frag.setArguments(args);
         return frag;
     }
@@ -54,12 +55,15 @@ public class EditAddDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         String title = getArguments().getString("title", "Enter Title");
         int date = getArguments().getInt("date",-1);
+        final int pos = getArguments().getInt("pos",-1);
         float score = getArguments().getFloat("score",-1f);
+        boolean isNew = false;
 
+        if (pos == -1) isNew = true;
 
         //Cancel button
-        Button mCancelButton = (Button) view.findViewById(R.id.editCancelButton);
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
+        Button CancelButton = (Button) view.findViewById(R.id.editCancelButton);
+        CancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
@@ -72,7 +76,7 @@ public class EditAddDialogFragment extends DialogFragment {
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         ratingText=(TextView) view.findViewById(R.id.ratingText);
 
-        if (date != -1) {
+        if (!isNew) {
             EditTextTitle.setText(title);
             EditTextDate.setText(""+date);
             ratingBar.setRating(score/2);
@@ -95,6 +99,29 @@ public class EditAddDialogFragment extends DialogFragment {
         EditTextTitle.requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+
+        Button OkButton = (Button) view.findViewById(R.id.editOkButton);
+        //OK button New
+        if (isNew)
+        OkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).movieAdd(EditTextTitle.getText().toString(), Integer.parseInt(EditTextDate.getText().toString()),ratingBar.getRating());
+                dismiss();
+            }
+        });
+
+
+        //OK button Old/Edit
+        if (!isNew)
+        OkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).movieUpdate(EditTextTitle.getText().toString(), Integer.parseInt(EditTextDate.getText().toString()),ratingBar.getRating(),pos);
+                dismiss();
+            }
+        });
     }
 
 }
