@@ -105,26 +105,35 @@ public class EditAddDialogFragment extends DialogFragment {
 
 
         OkButton = (Button) view.findViewById(R.id.editOkButton);
+
         //OK button New
         if (isNew)
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).movieAdd(Title.getText().toString(), Integer.parseInt(Date.getText().toString()),ratingBar.getRating());
-                dismiss();
+                if (!isEmpty(Title) && !isEmpty(Date)){// Check if fields are empty
+                    ((MainActivity) getActivity()).movieAdd(Title.getText().toString(), Integer.parseInt(Date.getText().toString()),ratingBar.getRating());
+                    dismiss();
+                }
             }
         });
-
 
         //OK button Old/Edit
         if (!isNew)
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).movieUpdate(Title.getText().toString(), Integer.parseInt(Date.getText().toString()),ratingBar.getRating(),pos);
-                dismiss();
+                if (!isEmpty(Title) && !isEmpty(Date)) {// Check if fields are empty
+                    ((MainActivity) getActivity()).movieUpdate(Title.getText().toString(), Integer.parseInt(Date.getText().toString()), ratingBar.getRating(), pos);
+                    dismiss();
+                }
             }
         });
+    }
+
+
+    private boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0;
     }
 
 }
