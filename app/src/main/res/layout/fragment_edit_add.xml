@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/edit_name"
+    android:id="@+id/edit_add"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
     android:layout_gravity="center" android:orientation="vertical"
     android:padding="10dip" >
@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/Movie_Info"
+            android:id="@+id/editMovieInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Movie Information"
@@ -33,7 +33,7 @@
             android:inputType="number" />
 
         <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/editRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -41,13 +41,13 @@
             android:stepSize="0.05" />
 
         <TextView
-            android:id="@+id/ratingText"
+            android:id="@+id/editRatingText"
             android:layout_width="match_parent"
             android:layout_height="27dp"
+            android:gravity="center"
             android:includeFontPadding="false"
             android:text="0/10"
             android:textAlignment="center"
-            android:gravity="center"
             android:textAllCaps="false" />
 
         <LinearLayout

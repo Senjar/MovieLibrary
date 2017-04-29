@@ -27,7 +27,7 @@ public class CustomAdapter extends ArrayAdapter<Movie> {
 
 
     public CustomAdapter(Context context, List<Movie> movies) {
-        super(context, R.layout.listview_with_text_image, movies);
+        super(context, R.layout.gridview_item, movies);
         this.context = context;
         layoutinflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = context;
@@ -54,7 +54,7 @@ public class CustomAdapter extends ArrayAdapter<Movie> {
 
         ViewHolder holder;
         if(convertView == null){
-            convertView = layoutinflater.inflate(R.layout.listview_with_text_image, parent, false);
+            convertView = layoutinflater.inflate(R.layout.gridview_item, parent, false);
             holder = new ViewHolder();
 
             holder.tvImage = (TextView)convertView.findViewById(R.id.tvImage);

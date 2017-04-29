@@ -14,10 +14,13 @@ import android.widget.TextView;
 
 public class EditAddDialogFragment extends DialogFragment {
 
-    private EditText EditTextTitle;
+    private EditText Title;
+    private EditText Date;
     private RatingBar ratingBar;
     private TextView ratingText;
-    private EditText EditTextDate;
+    private Button OkButton;
+    private Button CancelButton;
+
 
     public EditAddDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -62,7 +65,7 @@ public class EditAddDialogFragment extends DialogFragment {
         if (pos == -1) isNew = true;
 
         //Cancel button
-        Button CancelButton = (Button) view.findViewById(R.id.editCancelButton);
+        CancelButton = (Button) view.findViewById(R.id.editCancelButton);
         CancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,14 +74,14 @@ public class EditAddDialogFragment extends DialogFragment {
         });
 
         //Rating Bar rating number update
-        EditTextTitle = (EditText) view.findViewById(R.id.editTextTitle);
-        EditTextDate = (EditText) view.findViewById(R.id.editTextDate);
-        ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
-        ratingText=(TextView) view.findViewById(R.id.ratingText);
+        Title = (EditText) view.findViewById(R.id.editTextTitle);
+        Date = (EditText) view.findViewById(R.id.editTextDate);
+        ratingBar = (RatingBar) view.findViewById(R.id.editRatingBar);
+        ratingText=(TextView) view.findViewById(R.id.editRatingText);
 
         if (!isNew) {
-            EditTextTitle.setText(title);
-            EditTextDate.setText(""+date);
+            Title.setText(title);
+            Date.setText(""+date);
             ratingBar.setRating(score/2);
             ratingText.setText(score+"/10");
         }
@@ -96,18 +99,18 @@ public class EditAddDialogFragment extends DialogFragment {
 
         getDialog().setTitle(title);
         // Show soft keyboard automatically and request focus to field
-        EditTextTitle.requestFocus();
+        Title.requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
 
-        Button OkButton = (Button) view.findViewById(R.id.editOkButton);
+        OkButton = (Button) view.findViewById(R.id.editOkButton);
         //OK button New
         if (isNew)
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).movieAdd(EditTextTitle.getText().toString(), Integer.parseInt(EditTextDate.getText().toString()),ratingBar.getRating());
+                ((MainActivity) getActivity()).movieAdd(Title.getText().toString(), Integer.parseInt(Date.getText().toString()),ratingBar.getRating());
                 dismiss();
             }
         });
@@ -118,7 +121,7 @@ public class EditAddDialogFragment extends DialogFragment {
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).movieUpdate(EditTextTitle.getText().toString(), Integer.parseInt(EditTextDate.getText().toString()),ratingBar.getRating(),pos);
+                ((MainActivity) getActivity()).movieUpdate(Title.getText().toString(), Integer.parseInt(Date.getText().toString()),ratingBar.getRating(),pos);
                 dismiss();
             }
         });

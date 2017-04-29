@@ -45,7 +45,11 @@ public class MainActivity extends ActionBarActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                previewLayout();//TODO fragment
+                final String title = movies.get(position).getTitle();
+                final int date = movies.get(position).getReleaseDate();
+                final float rating = movies.get(position).getRating();
+
+                showPreviewDialog(title,date,rating);
                 //Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
@@ -152,10 +156,7 @@ public class MainActivity extends ActionBarActivity {
         customAdapter.update(movie);
     }
 
-    private void previewLayout() { //TODO Replace with Fragment
-        Intent intent = new Intent(this,ObjectPreview.class);
-        startActivity(intent);
-    }
+
 
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
@@ -163,12 +164,17 @@ public class MainActivity extends ActionBarActivity {
         editAddDialogFragment.show(fm, "fragment_edit_name");
     }
 
-    private void showEditDialog(String title,int date,float score,int pos) {
+    private void showEditDialog(String title,int date,float rating,int pos) {
         FragmentManager fm = getSupportFragmentManager();
-        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance(title,date,score,pos);
+        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance(title,date,rating,pos);
         editAddDialogFragment.show(fm, "fragment_edit_name");
     }
 
+    private void showPreviewDialog(String title,int date,float rating) {
+        FragmentManager fm = getSupportFragmentManager();
+        PreviewDialogFragment previewDialogFragment = PreviewDialogFragment.newInstance(title,date,rating);
+        previewDialogFragment.show(fm, "fragment_preview");
+    }
 
 
 
