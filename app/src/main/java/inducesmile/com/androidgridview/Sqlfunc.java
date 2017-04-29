@@ -59,11 +59,22 @@ public class Sqlfunc extends SQLiteOpenHelper {
         values.put(TITLE, movie.getTitle());
         values.put(RELEASEDATE, movie.getReleaseDate());
         values.put(RATING, movie.getRating());
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE    TITLE = ? AND RELEASEDATE = ?", new String[]{movie.getTitle(),String.valueOf(movie.getReleaseDate())});
 
-        long result = db.update(TABLE_NAME, values, ID + " = ?", new String[] { String.valueOf(movie.getId()) });
+        if (mCursor.getCount() > 0)
+        {
+            /* record exist */
+            db.close();
+            return -1;
+        }
+        else
+        {
+            /* record not exist */
+            long result = db.update(TABLE_NAME, values, ID + " = ?", new String[] { String.valueOf(movie.getId()) });
+            db.close();
+            return result;
+        }
 
-        db.close();
-        return result;
     }
 
     public ArrayList<Movie> fetch(){

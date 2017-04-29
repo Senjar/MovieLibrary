@@ -138,7 +138,7 @@ public class MainActivity extends ActionBarActivity {
         else
         {
             Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
-            showEditDialog(); //TODO possible bad practice to call from here
+            showEditDialog(); //TODO Check: possible bad practice to call from here
         }
     }
 
@@ -147,8 +147,17 @@ public class MainActivity extends ActionBarActivity {
         movie.setTitle(title);
         movie.setReleaseDate(date);
         movie.setRating(rating);
-        db.update(movie);
-        customAdapter.update(movie);
+        if (db.update(movie)!=-1) {
+
+            customAdapter.update(movie);
+            Toast.makeText(MainActivity.this, "Movie Updated", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+
+            Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 
