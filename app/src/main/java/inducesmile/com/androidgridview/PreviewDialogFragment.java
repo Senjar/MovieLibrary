@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -60,6 +59,7 @@ public class PreviewDialogFragment extends DialogFragment {
         ratingBar = (RatingBar) view.findViewById(R.id.previewRatingBar);
         ratingText=(TextView) view.findViewById(R.id.previewRatingText);
 
+        //Set Fields
         TextImage.setText(title.substring(0, 1));
         Title.setText(title);
         Date.setText(""+date);

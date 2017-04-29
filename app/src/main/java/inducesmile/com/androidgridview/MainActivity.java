@@ -22,9 +22,7 @@ import java.util.Random;
 
 public class MainActivity extends ActionBarActivity {
 
-    //GridView lvMovies;
     ArrayList<Movie> movies;
-    //MovieAdapter movieAdapter;
     CustomAdapter customAdapter;
     Sqlfunc db;
     Random rnd; //TODO Remove
@@ -36,7 +34,6 @@ public class MainActivity extends ActionBarActivity {
 
         final GridView gridview = (GridView) findViewById(R.id.gridview);
         rnd = new Random();
-        //final List<ItemObject> allItems =
         db = new Sqlfunc(this);
         movies = db.fetch();
         customAdapter = new CustomAdapter(MainActivity.this, movies);
@@ -78,13 +75,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
                 builder.create().show();
-                ;
 
-
-
-
-
-                //previewLayout();
                 //Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
 
                 return true;
@@ -146,8 +137,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void movieUpdate(String title, int date, float rating,int pos) {
-        //int pos = customAdapter.getPosition();
-        //Toast.makeText(MainActivity.this, "Position: " + pos, Toast.LENGTH_SHORT).show();
         Movie movie = customAdapter.getItem(pos);
         movie.setTitle(title);
         movie.setReleaseDate(date);

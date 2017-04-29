@@ -22,7 +22,6 @@ public class CustomAdapter extends ArrayAdapter<Movie> {
         TextView tvTitle;
         TextView tvDate;
         RatingBar rbRating;
-
     }
 
 
@@ -66,17 +65,12 @@ public class CustomAdapter extends ArrayAdapter<Movie> {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        //holder.tvTitle.setText(listStorage.get(position).getContent());
-        //holder.tvDate.setText(listStorage.get(position).getContent().substring(0, 1));
-
-
         Movie movie = (Movie) getItem(position);
         holder.tvImage.setText(movie.getTitle().substring(0, 1));
         holder.tvTitle.setText(movie.getTitle());
         holder.tvDate.setText(String.valueOf(movie.getReleaseDate()));
         holder.tvDate.setText(String.valueOf(movie.getReleaseDate()));
         holder.rbRating.setRating(movie.getRating());
-                //setText(String.valueOf(movie.getRating()));
         return convertView;
 
     }
