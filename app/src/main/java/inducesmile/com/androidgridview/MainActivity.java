@@ -46,8 +46,8 @@ public class MainActivity extends ActionBarActivity {
                 final String title = movies.get(position).getTitle();
                 final int date = movies.get(position).getReleaseDate();
                 final float rating = movies.get(position).getRating();
-
-                showPreviewDialog(title,date,rating);
+                final String s = String.valueOf(movies.get(position).getId());//TODO Remove
+                showPreviewDialog( s,date,rating);//TODO showPreviewDialog(title,date,rating);
                 //Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
@@ -134,9 +134,12 @@ public class MainActivity extends ActionBarActivity {
         movie.setRating(rating);
         long movieID = db.insert(movie);
         movie.setId(movieID);
-        customAdapter.add(movie);
-
-
+        if (movieID!=-1)customAdapter.add(movie);//Check if add was successful then add to adapter
+        else
+        {
+            Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
+            showEditDialog(); //TODO possible bad practice to call from here
+        }
     }
 
     public void movieUpdate(String title, int date, float rating,int pos) {

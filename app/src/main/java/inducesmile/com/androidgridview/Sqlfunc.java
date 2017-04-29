@@ -27,7 +27,7 @@ public class Sqlfunc extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s TEXT, %s REAL)", TABLE_NAME, ID, TITLE, RELEASEDATE, RATING);
+        String sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT , %s TEXT , %s REAL ,unique (%s, %s))", TABLE_NAME, ID, TITLE, RELEASEDATE, RATING, TITLE, RELEASEDATE);
         db.execSQL(sql);
     }
 
