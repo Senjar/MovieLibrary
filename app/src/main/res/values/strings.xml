@@ -9,5 +9,6 @@
     <string name="action_add" />
     <string name="add">Add</string>
     <string name="favorite">Top/Bottom 3</string>
+    <string name="add_movies_to_appear_here">Add Movies to appear here!</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -26,6 +27,9 @@ public class MainActivity extends ActionBarActivity {
     Sqlfunc db;
     Random rnd; //TODO Remove
     GridView gridViewMain;
+    FrameLayout frameLayoutMain;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +39,13 @@ public class MainActivity extends ActionBarActivity {
         rnd = new Random();
         db = new Sqlfunc(this);
         movies = db.fetch();
+
         customAdapter = new CustomAdapter(MainActivity.this, movies);
         gridViewMain.setAdapter(customAdapter);
+
+        frameLayoutMain = (FrameLayout)findViewById(R.id.frameLayoutMain);
+
+        updateIntro();
 
         gridViewMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -44,8 +53,7 @@ public class MainActivity extends ActionBarActivity {
                 final String title = movies.get(position).getTitle();
                 final int date = movies.get(position).getReleaseDate();
                 final float rating = movies.get(position).getRating();
-                final String s = String.valueOf(movies.get(position).getId());//TODO Remove
-                showPreviewDialog( "ID: "+s,date,rating);//TODO showPreviewDialog(title,date,rating);
+                showPreviewDialog(title,date,rating);
                 //Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
@@ -70,6 +78,7 @@ public class MainActivity extends ActionBarActivity {
                             Movie movie = (Movie) gridViewMain.getItemAtPosition(position);
                             db.delete(movie);
                             customAdapter.remove(movie);
+                            updateIntro();
                         }
                     }
                 });
@@ -145,6 +154,7 @@ public class MainActivity extends ActionBarActivity {
             Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
             showEditDialog(); //TODO Check: possible bad practice to call from here
         }
+        updateIntro();
     }
 
     public void movieUpdate(String title, int date, float rating,int pos) {
@@ -191,6 +201,10 @@ public class MainActivity extends ActionBarActivity {
         topBottomDialogFragment.show(fm, "fragment_top_bottom");
     }
 
+    private void updateIntro() {
+        if (!movies.isEmpty()) frameLayoutMain.setVisibility(View.INVISIBLE);
+        else frameLayoutMain.setVisibility(View.VISIBLE);
+    }
 
 }
 
