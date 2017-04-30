@@ -54,7 +54,6 @@ public class MainActivity extends ActionBarActivity {
                 final int date = movies.get(position).getReleaseDate();
                 final float rating = movies.get(position).getRating();
                 showPreviewDialog(title,date,rating);
-                //Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -82,10 +81,7 @@ public class MainActivity extends ActionBarActivity {
                         }
                     }
                 });
-                builder.create().show();
-
-                //Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
-
+                builder.create().show();//Show Edit/Delete Dialog
                 return true;
             }
         });
@@ -109,10 +105,9 @@ public class MainActivity extends ActionBarActivity {
                 return true;
 
             case R.id.action_favorites:
-                //Toast.makeText(MainActivity.this, "Pressed Favorite", Toast.LENGTH_SHORT).show();
-                //TODO fetch TOP and BOTTOM
-                ArrayList<Movie> moviesTop = new ArrayList<Movie>();
-                ArrayList<Movie> moviesBottom = new ArrayList<Movie>();
+                ArrayList<Movie> moviesTop = db.fetchTop3();
+                ArrayList<Movie> moviesBottom = db.fetchBottom3();
+
                 moviesTop.add(new Movie(1,"The Ring",2000,3.6f));
                 moviesTop.add(new Movie(1,"Avatar",2009,4.7f));
                 moviesBottom.add(new Movie(1,"Moonlight",2017,2.2f));
@@ -201,7 +196,7 @@ public class MainActivity extends ActionBarActivity {
         topBottomDialogFragment.show(fm, "fragment_top_bottom");
     }
 
-    private void updateIntro() {
+    private void updateIntro() { //Updates the "Add movies to appear here!" visibility.
         if (!movies.isEmpty()) frameLayoutMain.setVisibility(View.INVISIBLE);
         else frameLayoutMain.setVisibility(View.VISIBLE);
     }
