@@ -3,7 +3,6 @@ package inducesmile.com.androidgridview;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -26,34 +25,34 @@ public class MainActivity extends ActionBarActivity {
     CustomAdapter customAdapter;
     Sqlfunc db;
     Random rnd; //TODO Remove
-
+    GridView gridViewMain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridViewMain = (GridView) findViewById(R.id.gridViewMain);
         rnd = new Random();
         db = new Sqlfunc(this);
         movies = db.fetch();
         customAdapter = new CustomAdapter(MainActivity.this, movies);
-        gridview.setAdapter(customAdapter);
+        gridViewMain.setAdapter(customAdapter);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridViewMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String title = movies.get(position).getTitle();
                 final int date = movies.get(position).getReleaseDate();
                 final float rating = movies.get(position).getRating();
-
-                showPreviewDialog(title,date,rating);
+                final String s = String.valueOf(movies.get(position).getId());//TODO Remove
+                showPreviewDialog( "ID: "+s,date,rating);//TODO showPreviewDialog(title,date,rating);
                 //Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
 
         final Activity mContext = this;
 
-        gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        gridViewMain.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
@@ -66,9 +65,9 @@ public class MainActivity extends ActionBarActivity {
                         .setItems(new String[] {"Edit","Delete"}, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if (which == 0) showEditDialog(title,date,rating*2,position); //TODO pass arguments
+                        if (which == 0) showEditDialog(title,date,rating,position);
                         else {
-                            Movie movie = (Movie) gridview.getItemAtPosition(position);
+                            Movie movie = (Movie) gridViewMain.getItemAtPosition(position);
                             db.delete(movie);
                             customAdapter.remove(movie);
                         }
@@ -101,7 +100,14 @@ public class MainActivity extends ActionBarActivity {
                 return true;
 
             case R.id.action_favorites:
-                Toast.makeText(MainActivity.this, "Pressed Favorite", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Pressed Favorite", Toast.LENGTH_SHORT).show();
+                //TODO fetch TOP and BOTTOM
+                ArrayList<Movie> moviesTop = new ArrayList<Movie>();
+                ArrayList<Movie> moviesBottom = new ArrayList<Movie>();
+                moviesTop.add(new Movie(1,"The Ring",2000,3.6f));
+                moviesTop.add(new Movie(1,"Avatar",2009,4.7f));
+                moviesBottom.add(new Movie(1,"Moonlight",2017,2.2f));
+                showTopBottomDialog(moviesTop,moviesBottom);
                 return true;
 
             default:
@@ -133,7 +139,12 @@ public class MainActivity extends ActionBarActivity {
         movie.setRating(rating);
         long movieID = db.insert(movie);
         movie.setId(movieID);
-        customAdapter.add(movie);
+        if (movieID!=-1)customAdapter.add(movie);//Check if add was successful then add to adapter
+        else
+        {
+            Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
+            showEditDialog(); //TODO Check: possible bad practice to call from here
+        }
     }
 
     public void movieUpdate(String title, int date, float rating,int pos) {
@@ -141,8 +152,17 @@ public class MainActivity extends ActionBarActivity {
         movie.setTitle(title);
         movie.setReleaseDate(date);
         movie.setRating(rating);
-        db.update(movie);
-        customAdapter.update(movie);
+        if (db.update(movie)!=-1) {
+
+            customAdapter.update(movie);
+            Toast.makeText(MainActivity.this, "Movie Updated", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+
+            Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 
@@ -159,13 +179,17 @@ public class MainActivity extends ActionBarActivity {
         editAddDialogFragment.show(fm, "fragment_edit_name");
     }
 
-    private void showPreviewDialog(String title,int date,float rating) {
+    public void showPreviewDialog(String title,int date,float rating) {
         FragmentManager fm = getSupportFragmentManager();
         PreviewDialogFragment previewDialogFragment = PreviewDialogFragment.newInstance(title,date,rating);
         previewDialogFragment.show(fm, "fragment_preview");
     }
 
-
+    private void showTopBottomDialog(ArrayList<Movie> moviesTop,ArrayList<Movie> moviesBottom) {
+        FragmentManager fm = getSupportFragmentManager();
+        TopBottomDialogFragment topBottomDialogFragment = TopBottomDialogFragment.newInstance(moviesTop,moviesBottom);
+        topBottomDialogFragment.show(fm, "fragment_top_bottom");
+    }
 
 
 }

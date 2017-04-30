@@ -12,11 +12,15 @@ public class Movie {
     private int releaseDate;
     private float rating;
 
-    public void Movie(int id, String title, int releasedate, float rating) {
+    public Movie(int id, String title, int releaseDate, float rating) {
         this.id = id;
         this.title = title;
-        this.releaseDate = releasedate;
-        this.rating = rating;
+        this.releaseDate = releaseDate;
+        this.rating = rating; //[0-5]
+    }
+
+    public Movie() {
+
     }
 
     public long getId() {
