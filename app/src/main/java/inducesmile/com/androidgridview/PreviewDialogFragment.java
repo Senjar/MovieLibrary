@@ -30,12 +30,12 @@ public class PreviewDialogFragment extends DialogFragment {
         // Use `newInstance` instead as shown below
     }
 
-    public static PreviewDialogFragment newInstance(String title,int date,float score) {
+    public static PreviewDialogFragment newInstance(String title,int date,float rating) {
         PreviewDialogFragment frag = new PreviewDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         args.putInt("date",date);
-        args.putFloat("score",score);
+        args.putFloat("rating",rating);
         frag.setArguments(args);
         return frag;
     }
@@ -51,7 +51,7 @@ public class PreviewDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         String title = getArguments().getString("title", "Enter Title");
         int date = getArguments().getInt("date", -1);
-        float score = getArguments().getFloat("score", -1f);
+        float rating = getArguments().getFloat("rating", -1f);
 
         TextImage = (TextView) view.findViewById(R.id.previewTextImage);
         Title = (TextView) view.findViewById(R.id.previewTextTitle);
@@ -63,8 +63,9 @@ public class PreviewDialogFragment extends DialogFragment {
         TextImage.setText(title.substring(0, 1));
         Title.setText(title);
         Date.setText(""+date);
-        ratingBar.setRating(score);
-        ratingText.setText(score*2+"/10");
+        ratingBar.setRating(rating);
+        if(rating*2 % 1 == 0) ratingText.setText(Math.round(rating*2)+"/10");
+            else ratingText.setText(rating*2+"/10");
         //OK button
         OKButton = (Button) view.findViewById(R.id.previewOkButton);
         OKButton.setOnClickListener(new View.OnClickListener() {

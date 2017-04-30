@@ -28,12 +28,12 @@ public class EditAddDialogFragment extends DialogFragment {
         // Use `newInstance` instead as shown below
     }
 
-    public static EditAddDialogFragment newInstance(String title,int date,float score,int pos) {
+    public static EditAddDialogFragment newInstance(String title,int date,float rating,int pos) {
         EditAddDialogFragment frag = new EditAddDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         args.putInt("date",date);
-        args.putFloat("score",score);
+        args.putFloat("rating",rating);
         args.putInt("pos",pos);
         frag.setArguments(args);
         return frag;
@@ -59,7 +59,7 @@ public class EditAddDialogFragment extends DialogFragment {
         String title = getArguments().getString("title", "Enter Title");
         int date = getArguments().getInt("date",-1);
         final int pos = getArguments().getInt("pos",-1);
-        float score = getArguments().getFloat("score",-1f);
+        float rating = getArguments().getFloat("rating",-1f);
         boolean isNew = false;
 
         if (pos == -1) isNew = true;
@@ -82,8 +82,9 @@ public class EditAddDialogFragment extends DialogFragment {
         if (!isNew) {
             Title.setText(title);
             Date.setText(""+date);
-            ratingBar.setRating(score/2);
-            ratingText.setText(score+"/10");
+            ratingBar.setRating(rating);
+            if(rating*2 % 1 == 0) ratingText.setText(Math.round(rating*2)+"/10");
+                else ratingText.setText(rating*2+"/10");
         }
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
