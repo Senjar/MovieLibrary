@@ -66,7 +66,7 @@ public class CustomAdapter extends ArrayAdapter<Movie> {
         }
 
         Movie movie = (Movie) getItem(position);
-        holder.tvImage.setText(movie.getTitle().substring(0, 1));
+        holder.tvImage.setText(movie.getTitle().substring(0, 1));//Keep first letter of Title
         holder.tvTitle.setText(movie.getTitle());
         holder.tvDate.setText(String.valueOf(movie.getReleaseDate()));
         holder.tvDate.setText(String.valueOf(movie.getReleaseDate()));
