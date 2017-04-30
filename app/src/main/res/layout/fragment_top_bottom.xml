@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:layout_gravity="center" android:orientation="vertical"
+    android:padding="10dip"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/tbTextBest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Best"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="24sp" />
+
+    <GridView
+        android:id="@+id/gridViewTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:horizontalSpacing="8dp"
+        android:numColumns="3" />
+
+    <TextView
+        android:id="@+id/tbTextWorst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Worst"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <GridView
+        android:id="@+id/gridViewBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:horizontalSpacing="8dp"
+        android:numColumns="3"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.65"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/tbOkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="OK"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+</LinearLayout>
