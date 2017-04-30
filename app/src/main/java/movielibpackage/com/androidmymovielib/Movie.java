@@ -1,4 +1,4 @@
-package inducesmile.com.androidgridview;
+package movielibpackage.com.androidmymovielib;
 
 /**
  * Created by jklaz on 12-Apr-17.

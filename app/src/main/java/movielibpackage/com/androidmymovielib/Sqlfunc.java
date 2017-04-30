@@ -1,4 +1,4 @@
-package inducesmile.com.androidgridview;
+package movielibpackage.com.androidmymovielib;
 
 /**
  * Created by jklaz on 12-Apr-17.
@@ -77,6 +77,7 @@ public class Sqlfunc extends SQLiteOpenHelper {
 
     }
 
+
     public ArrayList<Movie> fetch(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Movie> movies = new ArrayList<Movie>();
@@ -114,6 +115,22 @@ public class Sqlfunc extends SQLiteOpenHelper {
 
         return movie;
     }
+
+    public ArrayList<Movie> fetchTop3() {//TODO fetch top 3 with rating >=2.5 (Ratings are 0-5)
+        ArrayList<Movie> moviesTop = new ArrayList<Movie>();
+
+
+        return moviesTop;
+    }
+
+    public ArrayList<Movie> fetchBottom3() {//TODO fetch bottom 3 with rating <2.5 (Ratings are 0-5)
+        ArrayList<Movie> moviesBottom = new ArrayList<Movie>();
+
+
+        return moviesBottom;
+    }
+
+
 
     public void delete(Movie movie) {
         SQLiteDatabase db = this.getWritableDatabase();

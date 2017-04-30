@@ -1,4 +1,4 @@
-package inducesmile.com.androidgridview;
+package movielibpackage.com.androidmymovielib;
 
 public class ItemObject {
 
