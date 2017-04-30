@@ -1,4 +1,4 @@
-package inducesmile.com.androidgridview;
+package movielibpackage.com.androidmymovielib;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 

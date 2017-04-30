@@ -1,4 +1,4 @@
-package inducesmile.com.androidgridview;
+package movielibpackage.com.androidmymovielib;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
