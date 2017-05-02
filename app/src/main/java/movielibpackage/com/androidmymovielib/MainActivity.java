@@ -154,19 +154,24 @@ public class MainActivity extends ActionBarActivity {
 
     public void movieUpdate(String title, int date, float rating,int pos) {
         Movie movie = customAdapter.getItem(pos);
+        String tempTitle = movie.getTitle();
+        int tempDate = movie.getReleaseDate();
+        float tempRating = movie.getRating();
         movie.setTitle(title);
         movie.setReleaseDate(date);
         movie.setRating(rating);
         if (db.update(movie)!=-1) {
-
+            //Movie doesn't exist -> can update
             customAdapter.update(movie);
             Toast.makeText(MainActivity.this, "Movie Updated", Toast.LENGTH_SHORT).show();
         }
         else
         {
-
+            //Movie exists -> can't update -> reset
+            movie.setTitle(tempTitle);
+            movie.setReleaseDate(tempDate);
+            movie.setRating(tempRating);
             Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
-
         }
     }
 
