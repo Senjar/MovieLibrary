@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Best"
+        android:text="@string/best"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="24sp" />
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Worst"
+        android:text="@string/worst"
         android:textAlignment="center"
         android:textSize="24sp" />
 
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="OK"
+            android:text="@string/ok"
             android:textAlignment="center" />
     </LinearLayout>
 

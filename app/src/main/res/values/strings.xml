@@ -10,5 +10,18 @@
     <string name="add">Add</string>
     <string name="favorite">Top/Bottom 3</string>
     <string name="add_movies_to_appear_here">Add Movies to appear here!</string>
+    <string name="enter_title">Enter Title</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="movie_already_exists">Movie already exists</string>
+    <string name="movie_updated">Movie Updated</string>
+    <string name="new_movie">New Movie</string>
+    <string name="movie_information">Movie Information</string>
+    <string name="title">Title</string>
+    <string name="year">Year</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="best">Best</string>
+    <string name="worst">Worst</string>
 
 </resources>

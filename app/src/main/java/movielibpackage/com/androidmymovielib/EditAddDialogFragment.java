@@ -56,7 +56,7 @@ public class EditAddDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String title = getArguments().getString("title", "Enter Title");
+        String title = getArguments().getString("title", getString(R.string.enter_title));
         int date = getArguments().getInt("date",-1);
         final int pos = getArguments().getInt("pos",-1);
         float rating = getArguments().getFloat("rating",-1f);

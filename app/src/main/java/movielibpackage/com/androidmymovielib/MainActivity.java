@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity {
                 final float rating = movies.get(position).getRating();
 
                 builder.setTitle(title)
-                        .setItems(new String[] {"Edit","Delete"}, new DialogInterface.OnClickListener() {
+                        .setItems(new String[] {getString(R.string.edit),getString(R.string.delete)}, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         if (which == 0) showEditDialog(title,date,rating,position);
@@ -146,7 +146,7 @@ public class MainActivity extends ActionBarActivity {
         if (movieID!=-1)customAdapter.add(movie);//Check if add was successful then add to adapter
         else
         {
-            Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.movie_already_exists, Toast.LENGTH_SHORT).show();
             showEditDialog(); //TODO Check: possible bad practice to call from here
         }
         updateIntro();
@@ -163,7 +163,7 @@ public class MainActivity extends ActionBarActivity {
         if (db.update(movie)!=-1) {
             //Movie doesn't exist -> can update
             customAdapter.update(movie);
-            Toast.makeText(MainActivity.this, "Movie Updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.movie_updated, Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -171,7 +171,7 @@ public class MainActivity extends ActionBarActivity {
             movie.setTitle(tempTitle);
             movie.setReleaseDate(tempDate);
             movie.setRating(tempRating);
-            Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.movie_already_exists, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -179,7 +179,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance("New Movie");
+        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance(getString(R.string.new_movie));
         editAddDialogFragment.show(fm, "fragment_edit_name");
     }
 
