@@ -51,7 +51,8 @@
         android:gravity="center"
         android:isIndicator="true"
         android:numStars="5"
-        android:stepSize="0.05" />
+        android:stepSize="0.05"
+        android:progressDrawable="@drawable/ratingbar_custom_48dp"/>
 
     <TextView
         android:id="@+id/previewRatingText"
