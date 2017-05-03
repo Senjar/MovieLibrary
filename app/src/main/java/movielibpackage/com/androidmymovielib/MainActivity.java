@@ -108,9 +108,6 @@ public class MainActivity extends ActionBarActivity {
                 ArrayList<Movie> moviesTop = db.fetchTop3();
                 ArrayList<Movie> moviesBottom = db.fetchBottom3();
 
-                moviesTop.add(new Movie(1,"The Ring",2000,3.6f));
-                moviesTop.add(new Movie(1,"Avatar",2009,4.7f));
-                moviesBottom.add(new Movie(1,"Moonlight",2017,2.2f));
                 showTopBottomDialog(moviesTop,moviesBottom);
                 return true;
 

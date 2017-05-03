@@ -117,16 +117,34 @@ public class Sqlfunc extends SQLiteOpenHelper {
     }
 
     public ArrayList<Movie> fetchTop3() {//TODO fetch top 3 with rating >=2.5 (Ratings are 0-5)
+        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Movie> moviesTop = new ArrayList<Movie>();
 
-
+        Cursor cursor = db.query(TABLE_NAME,new String[] {ID, TITLE, RELEASEDATE, RATING},RATING + ">= 2.5",null,null,null,RATING +" DESC","3");
+        while (cursor.moveToNext()) {
+            Movie movie = new Movie();
+            movie.setId(cursor.getInt(0));
+            movie.setTitle(cursor.getString(1));
+            movie.setReleaseDate(cursor.getInt(2));
+            movie.setRating(cursor.getFloat(3));
+            moviesTop.add(movie);
+        }
         return moviesTop;
     }
 
     public ArrayList<Movie> fetchBottom3() {//TODO fetch bottom 3 with rating <2.5 (Ratings are 0-5)
+        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Movie> moviesBottom = new ArrayList<Movie>();
 
-
+        Cursor cursor = db.query(TABLE_NAME,new String[] {ID, TITLE, RELEASEDATE, RATING},RATING + "< 2.5",null,null,null,RATING +" ASC","3");
+        while (cursor.moveToNext()) {
+            Movie movie = new Movie();
+            movie.setId(cursor.getInt(0));
+            movie.setTitle(cursor.getString(1));
+            movie.setReleaseDate(cursor.getInt(2));
+            movie.setRating(cursor.getFloat(3));
+            moviesBottom.add(movie);
+        }
         return moviesBottom;
     }
 
