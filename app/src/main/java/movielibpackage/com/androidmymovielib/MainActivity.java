@@ -143,7 +143,7 @@ public class MainActivity extends ActionBarActivity {
         movie.setRating(rating);
         long movieID = db.insert(movie);
         movie.setId(movieID);
-        if (movieID!=-1)customAdapter.add(movie);//Check if add was successful then add to adapter
+        if (movieID!=-1)customAdapter.add(movie);//Check if add was successful and then add to adapter
         else
         {
             Toast.makeText(MainActivity.this, R.string.movie_already_exists, Toast.LENGTH_SHORT).show();

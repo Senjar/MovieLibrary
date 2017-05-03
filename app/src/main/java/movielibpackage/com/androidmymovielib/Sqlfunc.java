@@ -59,7 +59,7 @@ public class Sqlfunc extends SQLiteOpenHelper {
         values.put(TITLE, movie.getTitle());
         values.put(RELEASEDATE, movie.getReleaseDate());
         values.put(RATING, movie.getRating());
-        Cursor mCursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE    TITLE = ? AND RELEASEDATE = ?", new String[]{movie.getTitle(),String.valueOf(movie.getReleaseDate())});
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE    TITLE = ? AND RELEASEDATE = ? AND ID <> ?", new String[]{movie.getTitle(),String.valueOf(movie.getReleaseDate()),String.valueOf(movie.getId())});
 
         if (mCursor.getCount() > 0)
         {
