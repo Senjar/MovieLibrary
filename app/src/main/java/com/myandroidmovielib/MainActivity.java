@@ -127,13 +127,14 @@ public class MainActivity extends ActionBarActivity {
         else
         {
             Toast.makeText(MainActivity.this, R.string.movie_already_exists, Toast.LENGTH_SHORT).show();
-            showEditDialog(); //TODO Check: possible bad practice to call from here
+            showEditDialog();
         }
         updateIntro();
     }
 
     public void movieUpdate(String title, int date, float rating,int pos) {
         Movie movie = customAdapter.getItem(pos);
+        if (movie == null) throw new AssertionError();
         String tempTitle = movie.getTitle();
         int tempDate = movie.getReleaseDate();
         float tempRating = movie.getRating();
