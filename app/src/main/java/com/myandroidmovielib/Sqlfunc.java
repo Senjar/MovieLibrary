@@ -116,7 +116,7 @@ public class Sqlfunc extends SQLiteOpenHelper {
         return movie;
     }
 
-    public ArrayList<Movie> fetchTop3() {//TODO fetch top 3 with rating >=2.5 (Ratings are 0-5)
+    public ArrayList<Movie> fetchTop3() {//fetch top 3 with rating >=2.5 (Ratings are 0-5)
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Movie> moviesTop = new ArrayList<Movie>();
 
@@ -132,7 +132,7 @@ public class Sqlfunc extends SQLiteOpenHelper {
         return moviesTop;
     }
 
-    public ArrayList<Movie> fetchBottom3() {//TODO fetch bottom 3 with rating <2.5 (Ratings are 0-5)
+    public ArrayList<Movie> fetchBottom3() {// fetch bottom 3 with rating <2.5 (Ratings are 0-5)
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Movie> moviesBottom = new ArrayList<Movie>();
 

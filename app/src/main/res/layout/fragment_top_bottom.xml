@@ -14,6 +14,7 @@
         android:text="@string/best"
         android:textAlignment="center"
         android:textAllCaps="false"
+        android:textColor="@color/text_color_grey"
         android:textSize="24sp" />
 
     <GridView
@@ -32,6 +33,7 @@
         android:gravity="center"
         android:text="@string/worst"
         android:textAlignment="center"
+        android:textColor="@color/text_color_grey"
         android:textSize="24sp" />
 
     <GridView

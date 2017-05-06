@@ -24,7 +24,6 @@ public class MainActivity extends ActionBarActivity {
     ArrayList<Movie> movies;
     CustomAdapter customAdapter;
     Sqlfunc db;
-    Random rnd; //TODO Remove
     GridView gridViewMain;
     FrameLayout frameLayoutMain;
 
@@ -35,7 +34,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         gridViewMain = (GridView) findViewById(R.id.gridViewMain);
-        rnd = new Random();
         db = new Sqlfunc(this);
         movies = db.fetch();
 
@@ -117,20 +115,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
-    public void addRandom(){
-
-            Movie movie = new Movie();
-
-            NumberFormat formatter = new DecimalFormat("#0.0");
-
-            movie.setTitle("Movie " + rnd.nextInt(100));
-            movie.setRating(Float.parseFloat(formatter.format((rnd.nextFloat() * 10)/2)));
-            movie.setReleaseDate(rnd.nextInt(67)+1950);
-            long movieID = db.insert(movie);
-            movie.setId(movieID);
-            customAdapter.add(movie);
-    }
 
     public void movieAdd(String title, int date, float rating){
         Movie movie = new Movie();

@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1.65"
-        android:background="@color/accent_material_light"
+        android:background="@color/item_letter_background_color"
         android:gravity="center"
         android:text="null"
         android:textAlignment="center"
-        android:textColor="@color/primary_text_default_material_dark"
+        android:textColor="@color/text_color"
         android:textSize="42sp" />
 
     <TextView
