@@ -2,7 +2,7 @@
     <string name="app_name">My Movie Library</string>
     <string name="add">Add</string>
     <string name="topBottom">Top/Bottom 3</string>
-    <string name="add_movies_to_appear_here">Add Movies to appear here!</string>
+    <string name="add_movies_to_appear_here">Add Movies to appear here!\nLong-press to edit/delete</string>
     <string name="enter_title">Enter Title</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
