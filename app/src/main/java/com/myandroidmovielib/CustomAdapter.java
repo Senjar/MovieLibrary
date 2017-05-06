@@ -1,4 +1,4 @@
-package movielibpackage.com.androidmymovielib;
+package com.myandroidmovielib;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.List;
+
 
 public class CustomAdapter extends ArrayAdapter<Movie> {
 

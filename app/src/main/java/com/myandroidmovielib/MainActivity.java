@@ -1,4 +1,4 @@
-package movielibpackage.com.androidmymovielib;
+package com.myandroidmovielib;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,7 +18,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
-
 
 public class MainActivity extends ActionBarActivity {
 
