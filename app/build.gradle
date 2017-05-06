@@ -5,7 +5,7 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "inducesmile.com.androidgridview"
+        applicationId "nickjklaz.com.androidmovielib"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1

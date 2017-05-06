@@ -1,4 +1,4 @@
-package movielibpackage.com.androidmymovielib;
+package com.myandroidmovielib;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,7 +49,7 @@ public class PreviewDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String title = getArguments().getString("title", "Enter Title");
+        String title = getArguments().getString("title", String.valueOf(R.string.enter_title));
         int date = getArguments().getInt("date", -1);
         float rating = getArguments().getFloat("rating", -1f);
 

@@ -14,14 +14,14 @@
             android:id="@+id/editMovieInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Movie Information"
+            android:text="@string/movie_information"
             android:textSize="24sp" />
 
         <EditText
             android:id="@+id/editTextTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title"
+            android:hint="@string/title"
             android:imeOptions="actionNext"
             android:inputType="text" />
 
@@ -29,7 +29,7 @@
             android:id="@+id/editTextDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Year"
+            android:hint="@string/year"
             android:inputType="number" />
 
         <RatingBar
@@ -38,7 +38,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:numStars="5"
-            android:stepSize="0.05" />
+            android:stepSize="0.05"
+            android:progressDrawable="@drawable/ratingbar_custom_48dp"/>
 
         <TextView
             android:id="@+id/editRatingText"
@@ -60,14 +61,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Cancel" />
+                android:text="@string/cancel" />
 
             <Button
                 android:id="@+id/editOkButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="OK" />
+                android:text="@string/ok" />
 
         </LinearLayout>
 

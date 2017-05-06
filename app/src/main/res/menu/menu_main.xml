@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.myandroidmovielib.MainActivity">
     <item
         android:id="@+id/action_add"
         android:icon="@drawable/ic_add_white_48dp"
@@ -9,7 +9,7 @@
     <item
         android:id="@+id/action_favorites"
         android:icon="@drawable/ic_thumbs_up_down_white_48dp"
-        android:title="@string/favorite"
+        android:title="@string/topBottom"
         app:showAsAction="ifRoom" />
 
 </menu>

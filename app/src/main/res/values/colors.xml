@@ -1,5 +1,11 @@
 <resources>
-
-    <color name="black_overlay">#66000000</color>
+    <color name="colorPrimary">@color/accent_material_light</color>
+    <color name="colorPrimaryDark">@color/accent_material_light</color>
+    <color name="colorAccent">@color/accent_material_light</color>
+    <color name="item_background_color">@color/dim_foreground_disabled_material_dark</color>
+    <color name="item_letter_background_color">@color/accent_material_light</color>
+    <color name="text_color">@color/primary_text_default_material_dark</color>
+    <color name="text_color_dark">@color/background_material_dark</color>
+    <color name="text_color_grey">@color/button_material_dark</color>
 
 </resources>

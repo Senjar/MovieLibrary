@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Βιβλιοθήκη ταινών</string>
+    <string name="add">Προσθήκη</string>
+    <string name="add_movies_to_appear_here">Πρόσθεσε ταινίες για να εμφανιστούν εδώ!\nΠιέστε παρατεταμένα για επεξεργασία/διαγραφή</string>
+    <string name="best">Καλύτερες</string>
+    <string name="cancel">Άκυρο</string>
+    <string name="delete">Διαγραφή</string>
+    <string name="edit">Επεξεργασία</string>
+    <string name="enter_title">Εισαγωγή Τίτλου</string>
+    <string name="topBottom">3 Καλύτερες/Χειρότερες</string>
+    <string name="ok">ΟΚ</string>
+    <string name="title">Τίτλος</string>
+    <string name="worst">Χειρότερες</string>
+    <string name="year">Χρoνιά</string>
+    <string name="new_movie">Νέα Ταινία</string>
+    <string name="movie_updated">Η ταινία ανανεώθηκε</string>
+    <string name="movie_information">Πληροφορίες ταινίας</string>
+    <string name="movie_already_exists">Η ταινία υπάρχει ήδη</string>
+</resources>

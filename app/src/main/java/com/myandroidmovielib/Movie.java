@@ -1,4 +1,4 @@
-package movielibpackage.com.androidmymovielib;
+package com.myandroidmovielib;
 
 /**
  * Created by jklaz on 12-Apr-17.

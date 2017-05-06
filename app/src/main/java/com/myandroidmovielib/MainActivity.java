@@ -1,4 +1,4 @@
-package movielibpackage.com.androidmymovielib;
+package com.myandroidmovielib;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,13 +19,11 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class MainActivity extends ActionBarActivity {
 
     ArrayList<Movie> movies;
     CustomAdapter customAdapter;
     Sqlfunc db;
-    Random rnd; //TODO Remove
     GridView gridViewMain;
     FrameLayout frameLayoutMain;
 
@@ -36,7 +34,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         gridViewMain = (GridView) findViewById(R.id.gridViewMain);
-        rnd = new Random();
         db = new Sqlfunc(this);
         movies = db.fetch();
 
@@ -69,7 +66,7 @@ public class MainActivity extends ActionBarActivity {
                 final float rating = movies.get(position).getRating();
 
                 builder.setTitle(title)
-                        .setItems(new String[] {"Edit","Delete"}, new DialogInterface.OnClickListener() {
+                        .setItems(new String[] {getString(R.string.edit),getString(R.string.delete)}, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         if (which == 0) showEditDialog(title,date,rating,position);
@@ -108,9 +105,6 @@ public class MainActivity extends ActionBarActivity {
                 ArrayList<Movie> moviesTop = db.fetchTop3();
                 ArrayList<Movie> moviesBottom = db.fetchBottom3();
 
-                moviesTop.add(new Movie(1,"The Ring",2000,3.6f));
-                moviesTop.add(new Movie(1,"Avatar",2009,4.7f));
-                moviesBottom.add(new Movie(1,"Moonlight",2017,2.2f));
                 showTopBottomDialog(moviesTop,moviesBottom);
                 return true;
 
@@ -122,20 +116,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void addRandom(){
-
-            Movie movie = new Movie();
-
-            NumberFormat formatter = new DecimalFormat("#0.0");
-
-            movie.setTitle("Movie " + rnd.nextInt(100));
-            movie.setRating(Float.parseFloat(formatter.format((rnd.nextFloat() * 10)/2)));
-            movie.setReleaseDate(rnd.nextInt(67)+1950);
-            long movieID = db.insert(movie);
-            movie.setId(movieID);
-            customAdapter.add(movie);
-    }
-
     public void movieAdd(String title, int date, float rating){
         Movie movie = new Movie();
         movie.setTitle(title);
@@ -143,17 +123,18 @@ public class MainActivity extends ActionBarActivity {
         movie.setRating(rating);
         long movieID = db.insert(movie);
         movie.setId(movieID);
-        if (movieID!=-1)customAdapter.add(movie);//Check if add was successful then add to adapter
+        if (movieID!=-1)customAdapter.add(movie);//Check if add was successful and then add to adapter
         else
         {
-            Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
-            showEditDialog(); //TODO Check: possible bad practice to call from here
+            Toast.makeText(MainActivity.this, R.string.movie_already_exists, Toast.LENGTH_SHORT).show();
+            showEditDialog();
         }
         updateIntro();
     }
 
     public void movieUpdate(String title, int date, float rating,int pos) {
         Movie movie = customAdapter.getItem(pos);
+        if (movie == null) throw new AssertionError();
         String tempTitle = movie.getTitle();
         int tempDate = movie.getReleaseDate();
         float tempRating = movie.getRating();
@@ -163,7 +144,7 @@ public class MainActivity extends ActionBarActivity {
         if (db.update(movie)!=-1) {
             //Movie doesn't exist -> can update
             customAdapter.update(movie);
-            Toast.makeText(MainActivity.this, "Movie Updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.movie_updated, Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -171,7 +152,7 @@ public class MainActivity extends ActionBarActivity {
             movie.setTitle(tempTitle);
             movie.setReleaseDate(tempDate);
             movie.setRating(tempRating);
-            Toast.makeText(MainActivity.this, "Movie already exists", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.movie_already_exists, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -179,7 +160,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance("New Movie");
+        EditAddDialogFragment editAddDialogFragment = EditAddDialogFragment.newInstance(getString(R.string.new_movie));
         editAddDialogFragment.show(fm, "fragment_edit_name");
     }
 
